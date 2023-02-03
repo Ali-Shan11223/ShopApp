@@ -46,7 +46,7 @@ class ProductOverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Shap'),
+        title: const Text('My Shop'),
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(10),
@@ -60,7 +60,7 @@ class ProductOverviewScreen extends StatelessWidget {
             id: loadedProducts[index].id,
             title: loadedProducts[index].title,
             imageUrl: loadedProducts[index].imageUrl,
-            description: loadedProducts[index].description,
+            
           );
         },
         itemCount: loadedProducts.length,
