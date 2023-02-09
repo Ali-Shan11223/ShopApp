@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/cart_provider.dart';
 import 'package:shop_app/providers/products_provider.dart';
+import 'package:shop_app/screens/cart_screen.dart';
 import 'package:shop_app/screens/product_detail_screen.dart';
 import 'package:shop_app/screens/product_overview_screen.dart';
 
@@ -14,21 +16,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProductsProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          fontFamily: 'Lato',
-          appBarTheme: const AppBarTheme(
-              color: Colors.teal, titleTextStyle: TextStyle(fontSize: 20)),
-        ),
-        home: const ProductOverviewScreen(),
-        routes: {
-          ProductDetailScreen.routeName: (context) =>
-              const ProductDetailScreen()
-        },
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => ProductsProvider(),
+          ),
+          ChangeNotifierProvider(create: (context) => CartProvider())
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            fontFamily: 'Lato',
+            appBarTheme: const AppBarTheme(
+                color: Colors.teal, titleTextStyle: TextStyle(fontSize: 20)),
+          ),
+          home: const ProductOverviewScreen(),
+          routes: {
+            ProductDetailScreen.routeName: (context) =>
+                const ProductDetailScreen(),
+            CartScreen.routeName: (context) => const CartScreen()
+          },
+        ));
   }
 }
