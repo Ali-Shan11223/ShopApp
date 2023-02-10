@@ -65,6 +65,28 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeSingleItem(String productId) {
+    // if the product id is not available in items list return nothing
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    // If the productId at the given index of list quantity is greater than 1
+    // Update the product(mean quantity - 1)
+    if (_items[productId]!.quantity > 1) {
+      _items.update(
+          productId,
+          (existingCartItem) => CartItem(
+              id: existingCartItem.id,
+              title: existingCartItem.title,
+              price: existingCartItem.price,
+              quantity: existingCartItem.quantity - 1));
+    } else {
+      // If the quantity is equal to 1 remove the entire product
+      _items.remove(productId);
+    }
+    notifyListeners();
+  }
+
   void clearCart() {
     _items = {};
     notifyListeners();

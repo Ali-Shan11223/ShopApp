@@ -33,6 +33,36 @@ class ItemCart extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Confirmation'),
+                content:
+                    const Text('Do you want to delete the item from Cart?'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: const Text(
+                        'No',
+                        style: TextStyle(color: Colors.red, fontSize: 18),
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ))
+                ],
+              );
+            });
+      },
       onDismissed: (direction) {
         Provider.of<CartProvider>(context, listen: false).removeItem(productId);
       },

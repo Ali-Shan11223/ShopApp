@@ -37,6 +37,18 @@ class ProductItem extends StatelessWidget {
           trailing: InkWell(
               onTap: () {
                 cart.addItem(product.id, product.title, product.price);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: const Text('Item added to the Cart!'),
+                  backgroundColor: Colors.teal,
+                  duration: const Duration(seconds: 2),
+                  action: SnackBarAction(
+                      label: 'UNDO',
+                      textColor: Colors.white,
+                      onPressed: () {
+                        cart.removeSingleItem(product.id);
+                      }),
+                ));
               },
               child: const Icon(
                 Icons.shopping_cart,
